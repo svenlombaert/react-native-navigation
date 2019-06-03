@@ -45,7 +45,7 @@ class ModalScreen extends React.Component {
         {this.props.previousModalIds && (<Button label='Dismiss All Previous Modals' testID={DISMISS_ALL_PREVIOUS_MODAL_BTN} onPress={this.dismissAllPreviousModals} />)}
         <Button label='Dismiss All Modals' testID={DISMISS_ALL_MODALS_BTN} onPress={this.dismissAllModals} />
         {this.props.previousModalIds && (<Button label='Dismiss First Modal' testID={DISMISS_FIRST_MODAL_BTN} onPress={this.dismissFirstModal} />)}
-        <Button label='Push screen' testID={PUSH_BTN} onPress={this.pushScreen} />
+        <Button label='Push' testID={PUSH_BTN} onPress={this.pushScreen} />
       </Root>
     );
   }

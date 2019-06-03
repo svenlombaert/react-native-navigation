@@ -3,13 +3,12 @@ package com.reactnativenavigation.parse;
 import com.reactnativenavigation.parse.params.Colour;
 import com.reactnativenavigation.parse.params.NullColor;
 import com.reactnativenavigation.parse.params.NullNumber;
+import com.reactnativenavigation.parse.params.NullText;
 import com.reactnativenavigation.parse.params.Number;
 import com.reactnativenavigation.parse.params.Text;
-import com.reactnativenavigation.parse.params.NullText;
 import com.reactnativenavigation.parse.parsers.ColorParser;
 import com.reactnativenavigation.parse.parsers.NumberParser;
 import com.reactnativenavigation.parse.parsers.TextParser;
-
 
 import org.json.JSONObject;
 
@@ -39,7 +38,6 @@ public class LayoutOptions {
         if (other.topMargin.hasValue()) topMargin = other.topMargin;
         if (other.orientation.hasValue()) orientation = other.orientation;
         if (other.direction.hasValue()) direction = other.direction;
-
     }
 
     public void mergeWithDefault(LayoutOptions defaultOptions) {
@@ -48,5 +46,13 @@ public class LayoutOptions {
         if (!topMargin.hasValue()) topMargin = defaultOptions.topMargin;
         if (!orientation.hasValue()) orientation = defaultOptions.orientation;
         if (!direction.hasValue()) direction = defaultOptions.direction;
+    }
+
+    public void mergeWithInitial(LayoutOptions initialOptions) {
+        if (!backgroundColor.hasValue()) backgroundColor = initialOptions.backgroundColor;
+        if (!componentBackgroundColor.hasValue()) componentBackgroundColor = initialOptions.componentBackgroundColor;
+        if (!topMargin.hasValue()) topMargin = initialOptions.topMargin;
+        if (!orientation.hasValue()) orientation = initialOptions.orientation;
+        if (!direction.hasValue()) direction = initialOptions.direction;
     }
 }

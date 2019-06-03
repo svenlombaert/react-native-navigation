@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static com.reactnativenavigation.utils.CollectionUtils.*;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -268,6 +269,13 @@ public class SideMenuControllerTest extends BaseTest {
         closeDrawerAndAssertVisibility(left, (side) -> side.resolveCurrentOptions().sideMenuRootOptions.left);
     }
 
+    @Test
+    public void applyTopInsets_delegatesToChildren() {
+        setLeftRight(spy(left), spy(right));
+        assertThat(uut.applyTopInsets()).isFalse();
+        forEach(uut.getChildControllers(), c -> verify(c).applyTopInsets());
+    }
+
     private void openDrawerAndAssertVisibility(ViewController side, Functions.FuncR1<ViewController, SideMenuOptions> opt) {
         Options options = new Options();
         (side == left ? options.sideMenuRootOptions.left : options.sideMenuRootOptions.right).visible = new Bool(true);
@@ -318,5 +326,10 @@ public class SideMenuControllerTest extends BaseTest {
         when(window.getDecorView()).thenReturn(Mockito.mock(View.class));
         when(activity.getWindow()).thenReturn(window);
         return activity;
+    }
+
+    private void setLeftRight(ViewController left, ViewController right) {
+        uut.setLeftController(left);
+        uut.setRightController(right);
     }
 }

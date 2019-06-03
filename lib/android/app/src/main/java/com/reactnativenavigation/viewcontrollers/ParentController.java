@@ -5,7 +5,9 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.reactnativenavigation.parse.Options;
@@ -16,7 +18,7 @@ import com.reactnativenavigation.views.Component;
 
 import java.util.Collection;
 
-import static com.reactnativenavigation.utils.CollectionUtils.forEach;
+import static com.reactnativenavigation.utils.CollectionUtils.*;
 
 public abstract class ParentController<T extends ViewGroup> extends ChildController {
 
@@ -43,7 +45,15 @@ public abstract class ParentController<T extends ViewGroup> extends ChildControl
         return getCurrentChild()
                 .resolveCurrentOptions()
                 .copy()
-                .withDefaultOptions(initialOptions);
+                .withInitialOptions(initialOptions);
+    }
+
+    protected Options resolveChildOptions(ViewController child) {
+	    if (child == this) return resolveCurrentOptions();
+        return child
+                .resolveCurrentOptions()
+                .copy()
+                .withInitialOptions(initialOptions);
     }
 
     @Override
@@ -81,6 +91,20 @@ public abstract class ParentController<T extends ViewGroup> extends ChildControl
 		return null;
 	}
 
+    @Nullable
+    @Override
+    public ViewController findController(View child) {
+        ViewController fromSuper = super.findController(child);
+        if (fromSuper != null) return fromSuper;
+
+        for (ViewController childController : getChildControllers()) {
+            ViewController fromChild = childController.findController(child);
+            if (fromChild != null) return fromChild;
+        }
+
+        return null;
+    }
+
     @Override
     public boolean containsComponent(Component component) {
         if (super.containsComponent(component)) {
@@ -95,9 +119,6 @@ public abstract class ParentController<T extends ViewGroup> extends ChildControl
     @CallSuper
     public void applyChildOptions(Options options, Component child) {
         this.options = initialOptions.mergeWith(options);
-        if (isRoot()) {
-            presenter.applyRootOptions(getView(), options);
-        }
     }
 
     @CallSuper
@@ -134,5 +155,32 @@ public abstract class ParentController<T extends ViewGroup> extends ChildControl
 
     public void onChildDestroyed(Component child) {
 
+    }
+
+    @Override
+    public boolean applyTopInsets() {
+        return getCurrentChild().applyTopInsets();
+    }
+
+    public int getTopInset(ViewController child) {
+        return 0;
+    }
+
+    @Override
+    public boolean onMeasureChild(CoordinatorLayout parent, ViewGroup child, int parentWidthMeasureSpec, int widthUsed, int parentHeightMeasureSpec, int heightUsed) {
+        ViewController controller = findController(child);
+        if (controller == null) return super.onMeasureChild(parent, child, parentWidthMeasureSpec, widthUsed, parentHeightMeasureSpec, heightUsed);
+        return onMeasureChild(parent, controller, parentWidthMeasureSpec, widthUsed, parentHeightMeasureSpec, heightUsed);
+    }
+
+    private boolean onMeasureChild(CoordinatorLayout parent, ViewController child, int parentWidthMeasureSpec, int widthUsed, int parentHeightMeasureSpec, int heightUsed) {
+        if (!(child instanceof ParentController)) {
+            int height = View.MeasureSpec.getSize(parentHeightMeasureSpec);
+            height -= child.getBottomInsets();
+            int spec = View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY);
+            parent.onMeasureChild(child.getView(), parentWidthMeasureSpec, widthUsed, spec, heightUsed);
+            return true;
+        }
+        return false;
     }
 }

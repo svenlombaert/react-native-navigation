@@ -1,3 +1,9 @@
+const { component, stack } = require('../commons/Layouts');
+const SideMenuLeft = 'SideMenuLeft';
+const SideMenuCenter = 'SideMenuCenter';
+const SideMenuRight = 'SideMenuRight';
+const StatusBarCenter = 'StatusBarCenter';
+
 module.exports = {
   ExternalComponent: 'ExternalComponent',
   ContextScreen: 'ContextScreen',
@@ -21,9 +27,42 @@ module.exports = {
   ReactTitleView: 'ReactTitleView',
   EventsScreen: 'EventsScreen',
   EventsOverlay: 'EventsOverlay',
-  SideMenuLeft: 'SideMenuLeft',
-  SideMenuRight: 'SideMenuRight',
-  SideMenuCenter: 'SideMenuCenter',
+  SideMenuLeft,
+  SideMenuCenter,
+  SideMenuRight,
+  SideMenu: {
+    sideMenu: {
+      left: component(SideMenuLeft),
+      center: component(SideMenuCenter)
+    }
+  },
+  StatusBar: {
+    sideMenu: {
+      left: {
+        component: {
+          id: 'left',
+          name: SideMenuLeft,
+          passProps: {
+            marginTop: 20
+          },
+          options: {
+            statusBar: {
+              drawBehind: true,
+              translucent: true
+            }
+          }
+        }
+      },
+      center: stack(StatusBarCenter),
+      right: {
+        component: {
+          id: 'right',
+          name: SideMenuRight
+        }
+      }
+    }
+  },
+  StatusBarCenter,
   FlatListScreen: 'FlatListScreen',
   Alert: 'Alert',
   Orientation: 'Orientation',

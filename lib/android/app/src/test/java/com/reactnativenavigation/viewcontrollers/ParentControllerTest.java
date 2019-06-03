@@ -166,25 +166,6 @@ public class ParentControllerTest extends BaseTest {
     }
 
     @Test
-    public void applyChildOptions_appliesRootOptionsIfRoot() {
-        addToParent(activity, uut);
-
-        Options options = new Options();
-        SimpleViewController child1 = spy(new SimpleViewController(activity, childRegistry, "child1", options));
-        uut.applyChildOptions(options, child1.getView());
-        verify(presenter, times(1)).applyRootOptions(uut.getView(), options);
-    }
-
-    @Test
-    public void applyChildOptions_doesNotApplyRootOptionsIfHasParent() {
-        Options options = new Options();
-        uut.setParentController(Mockito.mock(ParentController.class));
-        SimpleViewController child1 = spy(new SimpleViewController(activity, childRegistry, "child1", options));
-        uut.applyChildOptions(options, child1.getView());
-        verify(presenter, times(0)).applyRootOptions(uut.getView(), options);
-    }
-
-    @Test
     public void resolveCurrentOptions_returnOptionsIfNoChildren() {
         assertThat(uut.getChildControllers().size()).isZero();
         assertThat(uut.resolveCurrentOptions()).isEqualTo(uut.initialOptions);
@@ -209,7 +190,7 @@ public class ParentControllerTest extends BaseTest {
         assertThat(uut.getCurrentChild()).isEqualTo(child1);
         uut.resolveCurrentOptions();
         verify(child1).resolveCurrentOptions();
-        verify(copiedChildOptions).withDefaultOptions(uut.initialOptions);
+        verify(copiedChildOptions).withInitialOptions(uut.initialOptions);
     }
 
     @Test
