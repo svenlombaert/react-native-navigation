@@ -68,6 +68,13 @@
 	
 	if (newOptions.sideMenu.left.enabled.hasValue) {
 		[sideMenuController side:MMDrawerSideLeft enabled:newOptions.sideMenu.left.enabled.get];
+
+		if (newOptions.sideMenu.left.enabled.get) {
+			[sideMenuController setOpenDrawerGestureModeMask:[[newOptions.sideMenu.openGestureMode getWithDefaultValue:@(MMOpenDrawerGestureModeAll)] integerValue]];
+		} else {
+			[sideMenuController setOpenDrawerGestureModeMask:[@(MMOpenDrawerGestureModeNone) integerValue]];
+		}
+
 		[newOptions.sideMenu.left.enabled consume];
 	}
 	
