@@ -41,6 +41,14 @@
 		[sideMenu side:MMDrawerSideRight visible:withDefault.sideMenu.right.visible.get];
 		[withDefault.sideMenu.right.visible consume];
 	}
+
+	if (options.sideMenu.left.enabled.hasValue) {
+		if (options.sideMenu.left.enabled.get) {
+			[sideMenuController setOpenDrawerGestureModeMask:[[options.sideMenu.openGestureMode getWithDefaultValue:@(MMOpenDrawerGestureModeAll)] integerValue]];
+		} else {
+			[sideMenuController setOpenDrawerGestureModeMask:[@(MMOpenDrawerGestureModeNone) integerValue]];
+		}
+	}
 }
 
 - (void)applyOptionsOnInit:(RNNNavigationOptions *)initialOptions {
