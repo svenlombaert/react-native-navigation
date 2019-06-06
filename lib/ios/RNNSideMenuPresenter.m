@@ -42,6 +42,14 @@
 		[withDefault.sideMenu.right.visible consume];
 	}
     
+	if (options.sideMenu.left.enabled.hasValue) {
+		if (options.sideMenu.left.enabled.get) {
+			[sideMenu setOpenDrawerGestureModeMask:[[withDefault.sideMenu.openGestureMode getWithDefaultValue:@(MMOpenDrawerGestureModeAll)] integerValue]];
+		} else {
+			[sideMenu setOpenDrawerGestureModeMask:[@(MMOpenDrawerGestureModeNone) integerValue]];
+		}
+	}
+    
     [sideMenu.view setBackgroundColor:[withDefault.layout.backgroundColor getWithDefaultValue:nil]];
 }
 
