@@ -217,7 +217,7 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
     [self setAnimationVelocityLeft:MMDrawerDefaultAnimationVelocity];
 	[self setAnimationVelocityRight:MMDrawerDefaultAnimationVelocity];
     
-    [self setShowsShadow:YES];
+    [self setShowsShadow:NO];
     [self setShouldStretchLeftDrawer:YES];
 	[self setShouldStretchRightDrawer:YES];
     
