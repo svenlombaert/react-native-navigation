@@ -44,9 +44,9 @@
 
 	if (options.sideMenu.left.enabled.hasValue) {
 		if (options.sideMenu.left.enabled.get) {
-			[sideMenuController setOpenDrawerGestureModeMask:[[options.sideMenu.openGestureMode getWithDefaultValue:@(MMOpenDrawerGestureModeAll)] integerValue]];
+			[sideMenu setOpenDrawerGestureModeMask:[[options.sideMenu.openGestureMode getWithDefaultValue:@(MMOpenDrawerGestureModeAll)] integerValue]];
 		} else {
-			[sideMenuController setOpenDrawerGestureModeMask:[@(MMOpenDrawerGestureModeNone) integerValue]];
+			[sideMenu setOpenDrawerGestureModeMask:[@(MMOpenDrawerGestureModeNone) integerValue]];
 		}
 	}
 }
