@@ -74,7 +74,8 @@ class LayoutsScreen extends React.Component {
           id: 'right',
           name: Screens.SideMenuRight
         }
-      }
+      },
+      openGestureMode: 'bezel',
     }
   });
 
