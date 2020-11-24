@@ -77,7 +77,7 @@ export default class LayoutsScreen extends NavigationComponent {
     });
 
   sideMenu = () =>
-    Navigation.showModal({
+    Navigation.setRoot({
       sideMenu: {
         left: {
           component: {
@@ -85,16 +85,15 @@ export default class LayoutsScreen extends NavigationComponent {
             name: Screens.SideMenuLeft,
           },
         },
-        center: stack({
-          component: {
-            id: 'SideMenuCenter',
-            name: Screens.SideMenuCenter,
-          },
-        }),
-        right: {
-          component: {
-            id: 'right',
-            name: Screens.SideMenuRight,
+        center: {
+          bottomTabs: {
+            children: [stack(Screens.FirstBottomTabsScreen), stack(Screens.SecondBottomTabsScreen)],
+            options: {
+              bottomTabs: {
+                testID: BOTTOM_TABS,
+                tabsAttachMode: 'together',
+              },
+            },
           },
         },
         options: {

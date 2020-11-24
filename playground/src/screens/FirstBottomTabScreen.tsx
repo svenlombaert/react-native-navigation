@@ -18,6 +18,10 @@ const {
 } = testIDs;
 
 export default class FirstBottomTabScreen extends React.Component<NavigationComponentProps> {
+  componentDidMount() {
+    console.log('[FirstBottomTabScreen] TAB MOUNTED');
+  }
+
   static options(): Options {
     return {
       layout: {

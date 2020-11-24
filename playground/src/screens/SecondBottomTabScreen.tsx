@@ -18,6 +18,10 @@ const {
 } = testIDs;
 
 export default class SecondBottomTabScreen extends React.Component<NavigationComponentProps> {
+  componentDidMount() {
+    console.log('[SecondBottomTabScreen] TAB MOUNTED');
+  }
+
   static options() {
     return {
       topBar: {
