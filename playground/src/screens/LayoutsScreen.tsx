@@ -101,6 +101,11 @@ export default class LayoutsScreen extends NavigationComponent {
           layout: {
             orientation: ['portrait', 'landscape'],
           },
+          sideMenu: {
+            left: {
+              enabled: false,
+            },
+          },
           modalPresentationStyle: OptionsModalPresentationStyle.pageSheet,
         },
       },
