@@ -8,6 +8,7 @@ import Root from '../components/Root';
 import Button from '../components/Button';
 import Navigation from '../services/Navigation';
 import testIDs from '../testIDs';
+import Screens from './Screens';
 
 const { OPEN_LEFT_SIDE_MENU_BTN, OPEN_RIGHT_SIDE_MENU_BTN, CENTER_SCREEN_HEADER } = testIDs;
 
@@ -40,14 +41,15 @@ export default class SideMenuCenterScreen extends NavigationComponent {
     return (
       <Root componentId={this.props.componentId}>
         <Button
-          label="Open Left"
+          label="Push screen "
           testID={OPEN_LEFT_SIDE_MENU_BTN}
-          onPress={() => this.open('left')}
-        />
-        <Button
-          label="Open Right"
-          testID={OPEN_RIGHT_SIDE_MENU_BTN}
-          onPress={() => this.open('right')}
+          onPress={() =>
+            Navigation.push(this.props.componentId, {
+              component: {
+                name: Screens.Search,
+              },
+            })
+          }
         />
       </Root>
     );
