@@ -82,7 +82,27 @@ export default class NavigationScreen extends React.Component<Props> {
   }
 
   setRoot = () => Navigation.showModal(Screens.SetRoot);
-  showModal = () => Navigation.showModal(Screens.Modal);
+  showModal = () =>
+    Navigation.showModal(Screens.Modal, {
+      animations: {
+        showModal: {
+          enter: {
+            enabled: false,
+          },
+          exit: {
+            enabled: false,
+          },
+        },
+        dismissModal: {
+          exit: {
+            enabled: false,
+          },
+          enter: {
+            enabled: false,
+          },
+        },
+      },
+    });
 
   showPageSheetModal = () =>
     Navigation.showModal(Screens.Modal, {
